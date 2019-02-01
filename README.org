@@ -1,7 +1,9 @@
 ** About
-These are some simple dirty files for fast IO in Haskell. Note that this this is
+These are some simple dirty files for fast IO in Haskell. Note that this is
 not supposed to be used for anything too serious. It simply exists to read large
 amounts of data quickly for programming competition style problems.
+
+No emphasis are put on safety what so ever.
 
 ** How to use
 To compile you will simply need to add the 'io.c' file when compiling:
