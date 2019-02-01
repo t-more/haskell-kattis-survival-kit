@@ -1,0 +1,10 @@
+** About
+These are some simple dirty files for fast IO in Haskell. Note that this this is
+not supposed to be used for anything too serious. It simply exists to read large
+amounts of data quickly for programming competition style problems.
+
+** How to use
+To compile you will simply need to add the 'io.c' file when compiling:
+#+BEGIN_SRC
+ghc Main.hs io.c
+#+END_SRC
