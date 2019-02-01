@@ -1,3 +1,7 @@
+// Author: Tomas Möre
+// Year: 2019
+
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>

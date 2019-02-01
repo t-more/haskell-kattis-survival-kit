@@ -1,3 +1,23 @@
+{-|
+Author: Tomas Möre
+Year: 2019
+
+Warning, the IO defined here is not entirely compatible with the standard
+haskell prints and reads as it fully ignores the buffering Haskell does behind
+the scenes.
+
+For printing out large amounts of text i would instead sugest usiong the
+'ByteString.Builder' library together with its 'hPutBuilder' function.  In those
+cases it can be good to enable some output buffering to lower the ammount of
+syscalls and any attempt to output anything else then ASCII.
+
+See System.IO:
+> hSetBuffering stdout (BlockBuffering (Just 1000000))
+> hSetEncoding stdout char8
+
+For convienience the language extention OverloadedStrings can be used to syntactically write contant ByteStrings or ByteString-Builders directly.
+
+-}
 module IO where
 import Prelude hiding (getChar)
 import Data.Word
@@ -34,7 +54,6 @@ instance Input Word8 where
   nextInput = getByte
   getInput = getByte
 
-
 instance (Input a, Input b) => Input (a, b) where
   nextInput = (,) <$> nextInput <*> nextInput
   getInput = (,) <$> getInput <*> nextInput
@@ -52,7 +71,6 @@ foreign import ccall "get_char" c_getChar :: IO Word8
 nextVectorM :: (MV.Unbox a, Input a) => Int -> IO (MV.MVector (PrimState IO) a)
 nextVectorM size = do
   MV.replicateM size nextInput
-
 
 nextVector :: (MV.Unbox a, Input a) => Int -> IO (V.Vector a)
 nextVector size = do

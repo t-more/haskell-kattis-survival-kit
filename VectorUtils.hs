@@ -1,3 +1,8 @@
+{-
+Author: Tomas Möre
+Year: 2019
+-}
+
 module VectorUtils  ( quicksort, repliacteWIdxM, quicksortCmp, makePii, piiFst, piiSnd, PII) where
 
 import Control.Monad.ST
@@ -14,7 +19,8 @@ import Data.Bits
 import Data.Int
 import Text.Printf
 
--- | leaving order declaration for specific instances
+-- | Haskell unboxed vectors creates two diffrent vectors for pairs by default.
+-- therefore i creaded this ugly little hack to works with 32 bit pairs!
 type PII = Int64
 
 piiSnd b = b .&. 0x00000000FFFFFFFF
@@ -23,6 +29,8 @@ makePii a b = shiftL a 32 .|. b
 
 showPii p = printf "(%d, %d)" (piiFst p) (piiSnd p)
 
+-- | Constructs a vector in place. Contents of the vector will be the return
+-- value of the monadi action
 repliacteWIdxM :: (PrimMonad m, Unbox a) => Int -> (Int -> m a) -> m (MV.MVector (PrimState m) a)
 repliacteWIdxM size initF = do
   arr <- MV.unsafeNew size
@@ -34,13 +42,17 @@ repliacteWIdxM size initF = do
   init 0
   pure arr
 
+-- | Type synonyum for the quciksort
 type Comparator a = a -> a -> Bool
 
 
+-- | Mutable quicksort that defaults to using the standard ord (<) method for the
+-- contents
 quicksort :: (Ord a, PrimMonad m, Unbox a) => MV.MVector (PrimState m) a -> m ()
 quicksort v = do
   quicksort' v (<) 0 (MV.length v - 1)
 
+-- | Mutable quicksort where you supply your own comparison operator.
 quicksortCmp :: (PrimMonad m, Unbox a) => MV.MVector (PrimState m) a -> Comparator a -> m ()
 quicksortCmp v lessThen = do
   quicksort' v lessThen 0 (MV.length v - 1)
