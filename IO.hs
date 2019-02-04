@@ -116,6 +116,9 @@ foreign import ccall "next_word64" nextWord64 :: IO Word64
 foreign import ccall "println_int64" printInt64Ln :: Int64 -> IO ()
 foreign import ccall "println_int32" printInt32Ln :: Int32 -> IO ()
 
+printIntLn :: Int -> IO ()
+printIntLn = printInt64Ln . fromIntegral
+
 foreign import ccall "print_spaced_int64" printInt64Space :: Int64 -> IO ()
 foreign import ccall "print_spaced_int32" printInt32Space :: Int32 -> IO ()
 
