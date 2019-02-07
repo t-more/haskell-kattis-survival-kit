@@ -54,6 +54,10 @@ instance Input Word8 where
   nextInput = getByte
   getInput = getByte
 
+instance Input Double where
+  nextInput = nextDouble
+  getInput = getDouble
+
 instance (Input a, Input b) => Input (a, b) where
   nextInput = (,) <$> nextInput <*> nextInput
   getInput = (,) <$> getInput <*> nextInput
@@ -113,8 +117,12 @@ nextInt = fromIntegral <$> nextInt64
 foreign import ccall "next_word32" nextWord32 :: IO Word32
 foreign import ccall "next_word64" nextWord64 :: IO Word64
 
+foreign import ccall "get_double" getDouble :: IO Double
+foreign import ccall "next_double" nextDouble :: IO Double
+
 foreign import ccall "println_int64" printInt64Ln :: Int64 -> IO ()
 foreign import ccall "println_int32" printInt32Ln :: Int32 -> IO ()
+
 
 printIntLn :: Int -> IO ()
 printIntLn = printInt64Ln . fromIntegral

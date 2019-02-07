@@ -105,6 +105,18 @@ int64_t get_int64() {
   return sign * x;
 }
 
+double get_double() {
+  double res = 0;
+  scanf("%lf", &res);
+  return res;
+}
+
+double next_double() {
+  double res = 0;
+  scanf(" %lf", &res);
+  return res;
+}
+
 
 void println_int64(int64_t i) {
   printf("%lld\n", i);

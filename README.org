@@ -10,3 +10,13 @@ To compile you will simply need to add the 'io.c' file when compiling:
 #+BEGIN_SRC
 ghc Main.hs io.c
 #+END_SRC
+
+
+
+** Todo
+- [ ] Rewrite bytestring reader, to read giant buffer (Use GHC.IO.Decide.RawIO with FD (file descriptor)) or Sysmtm.Posix.Internals  use nonblocks (
+- [ ] Make Bystering parser (Buffer + offset)
+- [ ] Matrix or vector vector thingies
+- [ ] Benchmark number conversions
+- [ ] Hashable / Hashmap
+- [ ] Ouput
